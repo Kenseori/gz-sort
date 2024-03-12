@@ -1,12 +1,3 @@
-Более подробная информация по адресу [http://kmkeen.com/gz-sort/](http://kmkeen.com/gz-sort/)
-
-выполните сортировку слиянием сжатого файла gz объемом в несколько гигабайт
-
-
-### Быстрый старт
-
-`git clone https://github.com/keenerd/gz-sort; cd gz-sort; make; ./gz-sort -h`
-
 Нуждается в заголовках zlib и, вероятно, строится только на GNU/Linux.
 
     use: gz-sort [-u] [-S n] [-P n] source.gz dest.gz
