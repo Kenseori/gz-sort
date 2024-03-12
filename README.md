@@ -1,18 +1,17 @@
-More details at [http://kmkeen.com/gz-sort/](http://kmkeen.com/gz-sort/)
+Более подробная информация по адресу [http://kmkeen.com/gz-sort/](http://kmkeen.com/gz-sort/)
 
-perform a merge sort over a multi-GB gz compressed file
+выполните сортировку слиянием сжатого файла gz объемом в несколько гигабайт
 
 
-### Quickstart
+### Быстрый старт
 
 `git clone https://github.com/keenerd/gz-sort; cd gz-sort; make; ./gz-sort -h`
 
-Needs the zlib headers and probably only builds on GNU/Linux.
-
+Нуждается в заголовках zlib и, вероятно, строится только на GNU/Linux.
 
     use: gz-sort [-u] [-S n] [-P n] source.gz dest.gz
 
-    options:
+    опции:
        -h: help
        -u: unique
        -S n: size of presort, supports k/M/G suffix
@@ -20,7 +19,7 @@ Needs the zlib headers and probably only builds on GNU/Linux.
        -P n: use multiple threads (experimental, default disabled)
        -T: pass through (debugging/benchmarks)
 
-    estimating run time, crudely:
+    грубо оценивая время выполнения:
         time gzip -dc data.gz | gzip > /dev/null
         unthreaded: seconds * entropy * (log2(uncompressed_size/S)+2)
         (where 'entropy' is a fudge-factor between 1.5 for an
@@ -28,36 +27,36 @@ Needs the zlib headers and probably only builds on GNU/Linux.
         S and P are the corresponding settings
         multithreaded: maybe unthreaded/sqrt(P) ?
 
-    estimated disk use:
+    предполагаемое использование диска:
         2x source.gz
 
 
-### Minimum requirements to sort a terabyte:
+### Минимальные требования для сортировки терабайта:
 
-* 4MB ram  (yes, megabyte)
-* free disk space equal to the twice the compressed source.gz
-
-
-### Known bugs to fix
-
-Email me if you are using gz-sort and any of these omissions are causing you trouble.  For that matter, email me if you find something not on this  list too.
-
-* Does not build on non-gnu systems.
-* Sqrt(threads) is a terrible ratio.
-* No support for uncompressed stdin streams.
-* Breaks if a line is longer than the buffer size.
-* Lacks all error handling.
-* Ugly code with lots of ways to refactor.
-* Output could use predictable flushes.
+* 4 МБ оперативной памяти (да, мегабайт)
+* свободное место на диске, равное удвоенному объему сжатого source.gz
 
 
-### Performance tweaks to try
+### Известные ошибки, которые необходимо исправить
 
-* Profile!
-* Parallelize the final n-way merge.  This will require adding IPC.
-* Filter unique lines during the earlier passes.
-* Try out zlib-ng, about half of cpu time is spent on (un)gzipping.
-* Improve memory estimation, it lowballs and that hurts the presort.
-* Byte-based seeking instead of line-counting.
+Напишите мне, если вы используете gz-sort и любое из этих упущений вызывает у вас проблемы. Если уж на то пошло, напишите мне, если вы тоже найдете что-то, чего нет в этом списке.
+
+* Не строится на системах, отличных от gnu.
+* Sqrt (потоки) - ужасное соотношение.
+* Нет поддержки несжатых потоков stdin.
+* Прерывается, если длина строки превышает размер буфера.
+* Отсутствует вся обработка ошибок.
+* Уродливый код с множеством способов рефакторинга.
+* В выходных данных могут использоваться предсказуемые сбросы.
+
+
+### Настройки производительности, которые стоит попробовать
+
+* Профиль!
+* Распараллелить окончательное n-стороннее слияние. Для этого потребуется добавить IPC.
+* Отфильтровать уникальные строки во время предыдущих проходов.
+* Попробуйте zlib-ng, примерно половина процессорного времени тратится на (отмену) gzipping.
+* Улучшите оценку памяти, она снижается, и это вредит предварительной сортировке.
+* Поиск на основе байтов вместо подсчета строк.
 
 
